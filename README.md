@@ -10,3 +10,5 @@ A system to create and add agentic agents using Bedrock and AgentCore
 ## Design brief
 
 [Generation 1 design brief](docs/gen-1-design-brief.md) - one governed agent in General Support: the job, the cradle, the pin, the evaluation gates and the build sequence.
+
+[Generation 2 design brief](docs/gen-2-design-brief.md) - the destination state: a matrix of queue-dedicated pods, autonomy tiers, skills-based routing, and humans as the exception tier.
