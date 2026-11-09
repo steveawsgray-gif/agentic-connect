@@ -125,7 +125,17 @@ Each gate can end the road. A matrix that stops at step 3 is not a failed Genera
 - **Drift is a when, not an if.** Models, knowledge and caller behaviour all move. The continuous evaluation loop exists because a pod certified in January is a hypothesis by June.
 - **Open decisions for Steven, in his order, not this brief's:** which pod is second after Billing; the appetite for Tier B writes beyond dispute intake; whether caller long-term memory is ever switched on; and how much of the surge pod's narrowed scope is acceptable to callers in a crisis. The brief recommends; it does not decide.
 
-## 10. What Generation 2 is not
+## 10. How Generation 2 is demonstrated
+
+Generation 2 is demonstrated as a design, not as a live system — and the demonstration is explicit about which it is. Three assets carry it:
+
+1. **The complete Terraform.** The full infrastructure-as-code for the matrix is written and present: every pod, gateway, policy and flow exists as code a reviewer can read, diff and critique. It is deliberately **not applied** — the code is the blueprint made concrete, and a gate on the road from Generation 1 is what turns any part of it into running infrastructure. (The companion document *Generation 2 — Terraform blueprint* maps every file and resource.)
+2. **A console demonstration.** The dual-console story — the Connect floor view and the AgentCore matrix view — is walked through panel by panel: pod board, evaluation standing, a single contact traced across both consoles, a pod withdrawn and its traffic falling back. (The companion document *Generation 2 — console demo* is the script.)
+3. **A call-flow walkthrough.** One contact's journey through the matrix is narrated end to end — intake, the skill router's decision, pod work, a consultation, a bounded write, an outcome, and an exception handed to a human. (The companion document *Generation 2 — call-flow walkthrough*.)
+
+What the demonstration never does is fake a live call. Generation 1 carries the live proof burden for the whole project — a real agent, on a real call, on the real floor. Generation 2 shows where that proof leads: the code, the consoles and the flows, labelled design-stage on every page. A hiring manager is shown an architect's complete design, not a stage set pretending to be a building.
+
+## 11. What Generation 2 is not
 
 - **Not a plan to remove humans.** It is a plan to spend humans where they are worth the most.
 - **Not one giant general agent.** The matrix is many narrow pods precisely because narrow jobs can be pinned, evaluated and trusted; a generalist cannot.
