@@ -63,8 +63,9 @@ evidence lives:
      The build must produce an **arm64** image — AgentCore Runtime
      accepts only arm64 ("Supported platforms: [arm64]"; the x86_64
      image built 24 Nov was rejected). The project uses the aarch64
-     standard image; with Docker locally, build with
-     `--platform linux/arm64`.
+     standard image with environment type `ARM_CONTAINER` (the image
+     is rejected under `LINUX_CONTAINER`); with Docker locally, build
+     with `--platform linux/arm64`.
    - Then: `aws codebuild start-build --project-name
      agentic-connect-spike-build --region us-east-1` — builds
      `spike/agent` and pushes `:latest` to the ECR repo Terraform
