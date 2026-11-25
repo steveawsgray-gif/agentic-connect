@@ -1,0 +1,7 @@
+# Copy to terraform.tfvars and adjust before plan.
+aws_region          = "us-east-1"
+project_name        = "agentic-connect"
+environment         = "dev"
+connect_instance_id = "71134274-3650-457c-b614-5f198db32f65" # sgray-connect-migration-primer
+bedrock_model_id    = "us.anthropic.claude-haiku-4-5-20251001-v1:0" # Haiku 4.5 (spike model)
+image_tag           = "latest"

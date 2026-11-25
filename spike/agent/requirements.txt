@@ -1,0 +1,17 @@
+# Gate 0 spike — pinned to the versions in the AWS AgentCore A2A guide
+# ("Deploy A2A servers in AgentCore Runtime", read 2026-11-24).
+# a2a-sdk and strands-agents were verified to import cleanly in this
+# environment on 2026-11-24 (venv smoke test).
+a2a-sdk[all]~=0.3.26
+strands-agents~=1.57.2
+boto3~=1.43
+uvicorn~=0.34
+
+# Deliberately NOT included:
+# - bedrock-agentcore SDK (serve_a2a): the spike uses the raw a2a-sdk
+#   server instead, because serve_a2a + StrandsA2AExecutor would feed
+#   Connect's INIT_SESSION / CHANNEL_STATE extension messages to the
+#   model as user text. See main.py header + README "Why not serve_a2a".
+# - aws-opentelemetry-distro: the spike builds its TRACING_SPAN OTLP
+#   payloads by hand (one root span + one chat span per turn), so no
+#   OTEL SDK is needed for the probe.
