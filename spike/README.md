@@ -1,7 +1,6 @@
 # Gate 0 spike — DRAFT for Steven's review
 
-**Status: draft only. Nothing here has been deployed, committed, or
-pushed to GitHub. No AWS credentials, keys, or passwords are in any file.**
+**Status: draft only. Nothing here has been deployed to AWS. No AWS credentials, keys, or passwords are in any file.**
 
 This is the smallest possible agent that can prove the Project #3 seam:
 Amazon Connect Customer → A2A → a custom Bedrock agent on AgentCore
