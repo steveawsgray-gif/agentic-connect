@@ -260,6 +260,19 @@ Runtime, ECS / App Runner, where Connect's bearer reaches the
 container directly). Either way the auth model is a redesign item,
 not a config tweak.
 
+**Outcome 24 Nov, 21:18:** the curl returned **403 AccessDenied**
+with `authorizerConfiguration: None` confirmed. **Gate 0 FAILS on
+auth.** A Runtime with no authorizer requires SigV4 (IAM) — the CDK
+docs' reading was the right one. Connect sends only an API key, so
+the Runtime cannot host a Connect external agent in this shape. The
+script stopped before registering anything (no A2A application was
+created). The fallback — host the same A2A server outside Runtime
+(ECS / App Runner behind a public HTTPS endpoint, where Connect's
+bearer reaches the container directly) — is a Gate 0 architecture
+decision for Steven. The spike itself is proven sound (container
+built, Runtime created, agent card endpoint exists); only the
+hosting changes.
+
 **Decisive test** (script step 1, two minutes after apply):
 `curl` the invocations URL (`.../runtimes/<ARN>/invocations/.well-known/agent-card.json`)
 with only `Authorization: Bearer <key>` and no SigV4.
