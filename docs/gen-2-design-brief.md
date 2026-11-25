@@ -142,4 +142,4 @@ What the demonstration never does is fake a live call. Generation 1 carries the 
 - **Not Connect-native AI wearing a costume.** Every worker is a custom agent in an AgentCore cradle, or it is not Project 3.
 - **Not built, and not a promise.** It is the destination the Generation 1 design is aimed at, written down so Generation 1's choices — the cradle pattern, the outcomes contract, the handoff schema, the evaluation discipline — are made in a way the matrix can inherit.
 
-Generation 1 proves a governed agent can hold one seat. Generation 2 is the argument that the same discipline, cloned and routed by skill, can staff a floor — with the humans exactly where forty years of contact-centre work says they belong: on the contacts that were never routine in the first place.
+Generation 1 proves a governed agent can hold one seat. Generation 2 is the argument that the same discipline, cloned and routed by skill, can staff a floor — with the humans exactly where forty years of contact-center work says they belong: on the contacts that were never routine in the first place.
