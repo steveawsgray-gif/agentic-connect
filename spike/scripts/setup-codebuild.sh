@@ -90,6 +90,7 @@ cat > "$TMPDIR/inline-policy.json" <<'INLINE_JSON'
         "ecr:BatchCheckLayerAvailability",
         "ecr:GetDownloadUrlForLayer",
         "ecr:BatchGetImage",
+        "ecr:DescribeImages",
         "ecr:PutImage",
         "ecr:InitiateLayerUpload",
         "ecr:UploadLayerPart",
