@@ -241,6 +241,25 @@ runtime whose `authorizerConfiguration` is null is also described as
 having "no authorization configured". The Connect model only works if
 the bearer path reaches the container.
 
+**Finding 24 Nov (creation):** `Authorization` cannot be allowlisted
+without a custom JWT authorizer — the service rejects the Runtime
+creation ("Authorization header can be specified in
+requestHeaderAllowlist only when runtime is set up with
+customJWTAuthorizer for OAuth based authorization"). The AWS docs
+confirm it (custom headers doc: the `Authorization` header requires
+a `customJWTAuthorizer`; API keys are meant to be passed as
+`X-Api-Key`). Connect's key is not a JWT, so no JWT authorizer can
+accept it, and the container-side bearer check cannot receive the
+key through the Runtime proxy. `Authorization` was removed from the
+allowlist so the Runtime can be created. The curl test still decides
+open vs IAM-locked — with the header stripped, its outcomes are now:
+**401** (endpoint open, bearer stripped — the API-key check cannot
+work through the Runtime; auth model needs redesign), **403**
+(IAM-locked — Gate 0 fails on auth, fallback is hosting outside
+Runtime, ECS / App Runner, where Connect's bearer reaches the
+container directly). Either way the auth model is a redesign item,
+not a config tweak.
+
 **Decisive test** (script step 1, two minutes after apply):
 `curl` the invocations URL (`.../runtimes/<ARN>/invocations/.well-known/agent-card.json`)
 with only `Authorization: Bearer <key>` and no SigV4.
@@ -266,9 +285,10 @@ with only `Authorization: Bearer <key>` and no SigV4.
 Also: `network_configuration` is **required** by the provider schema
 (the draft sets `PUBLIC`); `protocol_configuration.server_protocol =
 "A2A"` was verified valid in the provider source; `request_header_configuration`
-is set to allowlist `Authorization`, `traceparent`, `tracestate`,
-`A2A-Extensions` (see UNVERIFIED #2 — the proxy may strip the
-non-Authorization headers anyway; the spike logs what arrives).
+is set to allowlist `traceparent`, `tracestate`,
+`A2A-Extensions` — `Authorization` was removed 24 Nov (see the
+finding in risk #1: it cannot be allowlisted without a custom JWT
+authorizer, and Connect's key is not a JWT).
 
 ## UNVERIFIED — details the docs do not settle (the live run decides)
 
