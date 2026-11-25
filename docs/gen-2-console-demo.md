@@ -6,13 +6,13 @@
 
 ## View 1 — The floor (Amazon Connect console)
 
-What the supervisor sees is a familiar contact centre with one new dimension: who — pod or human — is holding each contact.
+What the supervisor sees is a familiar contact center with one new dimension: who — pod or human — is holding each contact.
 
 - **Queues panel:** Priority, Billing and General Support as in Project 2, each showing contacts split by holder: pod-held, human-held, hybrid (pod preparing, human joined). Queue times and service levels read as they always have.
 - **Exception tier panel:** the human agents, shown with their proficiency profiles. Routing-step reporting shows where contacts matched at the strictest criteria, where steps relaxed, and where they exhausted to any-agent — the evidence staffing decisions are made from.
 - **Surge indicator:** when the standby pod is armed, the floor view shows it as a capacity state, with the narrowed scope it is operating at.
 
-**Demo beat 1 (30 seconds):** "This is still a contact centre. Same queues, same recordings, same contact records. The only difference is that some of the seats are held by governed agents — and you can see exactly which ones, contact by contact."
+**Demo beat 1 (30 seconds):** "This is still a contact center. Same queues, same recordings, same contact records. The only difference is that some of the seats are held by governed agents — and you can see exactly which ones, contact by contact."
 
 ## View 2 — The matrix (Amazon Bedrock AgentCore console)
 
