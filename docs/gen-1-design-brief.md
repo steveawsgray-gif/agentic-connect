@@ -6,7 +6,7 @@
 
 ## The design in one paragraph
 
-Project 3 adds one governed, custom AI agent to the working Project 2 contact centre. The first agent works only in General Support, handles case-status and service-navigation enquiries, uses read-only tools, and escalates everything outside that narrow job to the human floor. Amazon Connect remains the system of record for the contact; Amazon Bedrock AgentCore is the control plane for the agent. Connect owns telephony, queues, recordings, contact records and human escalation. AgentCore holds the selected model in a versioned cradle — Runtime, Memory, Gateway, Identity, Policy, Guardrails, Observability and Evaluations — so the model's intelligence can be used without giving it the run of the floor.
+Project 3 adds one governed, custom AI agent to the working Project 2 contact center. The first agent works only in General Support, handles case-status and service-navigation enquiries, uses read-only tools, and escalates everything outside that narrow job to the human floor. Amazon Connect remains the system of record for the contact; Amazon Bedrock AgentCore is the control plane for the agent. Connect owns telephony, queues, recordings, contact records and human escalation. AgentCore holds the selected model in a versioned cradle — Runtime, Memory, Gateway, Identity, Policy, Guardrails, Observability and Evaluations — so the model's intelligence can be used without giving it the run of the floor.
 
 > The model is the ordnance. AgentCore is the handling gear. Guardrails and policy are the pin.
 
