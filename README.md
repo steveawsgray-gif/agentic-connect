@@ -1,3 +1,12 @@
+# Agentic Connect
+
+Custom Bedrock agents staffing Amazon Connect queues, with AgentCore
+as the control plane.
+
+**Status — 24 Nov 2026:** design briefs published; Gate 0 spike proved
+the AgentCore Runtime hosting path fails on auth (403, bearer-only).
+Parked — re-host (ECS/App Runner) is the next step.
+
 
 <img width="2835" height="1710" alt="Project 3, first generation - one cradle, one seat in General Support" src="docs/project-3-hero-navy.png" />
 
