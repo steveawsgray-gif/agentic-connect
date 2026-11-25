@@ -18,9 +18,11 @@ substitution (Gen-1 brief §4, redline 2).
 | `agent/main.py` | The spike server: Strands agent (Haiku 4.5, temp 0, no tools) + custom A2A executor + bearer check + ROLE_* normalisation + `/ping`. |
 | `agent/requirements.txt` | Pinned deps (a2a-sdk 0.3.26, strands-agents 1.57.2, boto3 1.43, uvicorn 0.34 — the versions in the AWS AgentCore A2A guide). |
 | `agent/Dockerfile` (+ `.dockerignore`) | AgentCore Runtime container, port 9000, non-root. |
+| `agent/buildspec.yml` | CodeBuild buildspec: builds `spike/agent` and pushes `:latest` to ECR (CloudShell has no Docker). |
 | `terraform/main.tf` | KMS key + API-key secret, ECR repo, IAM execution role, CloudWatch log group, `aws_bedrockagentcore_agent_runtime`. Project #2 style (root module, `common_tags`, `terraform.tfvars.example`). |
 | `terraform/variables.tf`, `outputs.tf`, `terraform.tfvars.example` | Inputs/outputs. The `agent_runtime_url` output is the AccessUrl Connect calls. |
 | `scripts/register-connect.sh` | Steps 2–6 of the Connect setup, as auditable CLI commands (see below). Step 1 is the decisive auth test. |
+| `scripts/setup-codebuild.sh` | One-time setup: creates the CodeBuild service role + `agentic-connect-spike-build` project. |
 | `scripts/test-spike-local.sh` + `scripts/smoke_test.py` | Local smoke test — replays the Connect HTTPS flow with no AWS and no model. **23/23 checks pass** (see "Local verification"). |
 
 **Where this lives in the repo:** the spike is a self-contained probe
@@ -52,13 +54,27 @@ evidence lives:
 
 ### Scripted (Terraform + scripts)
 
-1. **Build + push the image.** From `agent/` (needs Docker; not run
-   here — no Docker in this environment):
-   `docker build -t general-1-spike:latest .`
-   then log in to ECR and push to the repository Terraform creates
-   (the URL is the `ecr_repository_url` output). Do this **before**
-   `terraform apply`, or apply twice (once for the repo, push, then
-   again with the image in place).
+1. **Build + push the image.** CloudShell has no Docker, so the image
+   is built in the cloud by CodeBuild (the local `docker build` route
+   below still works if you have Docker on your own machine):
+   - Once: `bash scripts/setup-codebuild.sh` — creates the CodeBuild
+     service role and the `agentic-connect-spike-build` project
+     (buildspec `agent/buildspec.yml`, privileged mode for Docker).
+   - Then: `aws codebuild start-build --project-name
+     agentic-connect-spike-build --region us-east-1` — builds
+     `spike/agent` and pushes `:latest` to the ECR repo Terraform
+     created. Check it with `aws codebuild batch-get-builds --ids
+     <build id> --region us-east-1`, or the build log in CloudWatch
+     (`/aws/codebuild/agentic-connect-spike-build`).
+   - With Docker locally instead: from `agent/`,
+     `docker build -t general-1-spike:latest .`, then log in to ECR
+     and push to the repository Terraform creates (the URL is the
+     `ecr_repository_url` output).
+   Do the build **before** `terraform apply`, or apply twice (once for
+   the repo, push, then again with the image in place). The first
+   apply on 24 Nov created 11 of 12 resources; only the Runtime
+   failed — the image was not in ECR yet — so the second apply is the
+   one that creates it.
 2. **Terraform apply** (from `terraform/`; needs the AWS CLI profile
    with your credentials — `terraform` was not available in this
    environment, so `terraform validate` has NOT been run here; run

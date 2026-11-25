@@ -1,0 +1,34 @@
+# Gate 0 spike — CodeBuild buildspec: build the spike image and push it
+# to ECR. CloudShell has no Docker, so the image is built here instead.
+#
+# CodeBuild checks out the whole repo, so the working directory is the
+# repo root and the build context is spike/agent (the Dockerfile lives
+# there, alongside main.py and requirements.txt).
+#
+# REPOSITORY_URI is set as a project environment variable by
+# scripts/setup-codebuild.sh — it is NOT hard-coded here.
+version: 0.2
+
+env:
+  variables:
+    AWS_REGION: us-east-1
+    IMAGE_TAG: latest
+
+phases:
+  pre_build:
+    commands:
+      - if [ -z "${REPOSITORY_URI:-}" ]; then echo "REPOSITORY_URI is not set (set it in the CodeBuild project environment)"; exit 1; fi
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region "$AWS_REGION" | docker login --username AWS --password-stdin 258032684610.dkr.ecr.us-east-1.amazonaws.com
+      - IMAGE_URI="${REPOSITORY_URI}:${IMAGE_TAG}"
+      - 'echo "Image URI: $IMAGE_URI"'
+  build:
+    commands:
+      - echo Building the spike image...
+      - docker build -t "$IMAGE_URI" spike/agent
+  post_build:
+    commands:
+      - echo Pushing the spike image to ECR...
+      - docker push "$IMAGE_URI"
+      - echo Confirming the pushed image...
+      - aws ecr describe-images --repository-name agentic-connect/general-1-spike --region "$AWS_REGION" --query 'imageDetails[*].{Digest:imageDigest,Tags:imageTags,PushedAt:imagePushedAt}' --output table
