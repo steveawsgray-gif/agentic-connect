@@ -60,6 +60,11 @@ evidence lives:
    - Once: `bash scripts/setup-codebuild.sh` — creates the CodeBuild
      service role and the `agentic-connect-spike-build` project
      (buildspec `agent/buildspec.yml`, privileged mode for Docker).
+     The build must produce an **arm64** image — AgentCore Runtime
+     accepts only arm64 ("Supported platforms: [arm64]"; the x86_64
+     image built 24 Nov was rejected). The project uses the aarch64
+     standard image; with Docker locally, build with
+     `--platform linux/arm64`.
    - Then: `aws codebuild start-build --project-name
      agentic-connect-spike-build --region us-east-1` — builds
      `spike/agent` and pushes `:latest` to the ECR repo Terraform
