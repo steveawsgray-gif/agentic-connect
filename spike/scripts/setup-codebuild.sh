@@ -108,7 +108,7 @@ else
   echo "Creating role $ROLE_NAME..."
   aws iam create-role --role-name "$ROLE_NAME" \
     --assume-role-policy-document "file://$TMPDIR/trust-policy.json" \
-    --description "Gate 0 spike: CodeBuild service role — build the spike image and push it to ECR" \
+    --description "Gate 0 spike: CodeBuild service role - build the spike image and push it to ECR" \
     --region "$REGION" >/dev/null
   ROLE_JUST_CREATED=1
 fi
