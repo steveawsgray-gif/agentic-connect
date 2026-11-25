@@ -140,7 +140,7 @@ cat > "$TMPDIR/project.json" <<'PROJECT_JSON'
     "type": "NO_ARTIFACTS"
   },
   "environment": {
-    "type": "LINUX_CONTAINER",
+    "type": "ARM_CONTAINER",
     "image": "aws/codebuild/amazonlinux2-aarch64-standard:3.0",
     "computeType": "BUILD_GENERAL1_SMALL",
     "privilegedMode": true,
