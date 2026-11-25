@@ -331,15 +331,19 @@ resource "aws_bedrockagentcore_agent_runtime" "spike" {
   }
 
   request_header_configuration {
-    # Headers the Runtime proxy forwards into the container. Without
-    # this, the container never sees the bearer token or the trace
-    # context Connect sends. "Authorization" is the documented example
-    # in the AgentCore A2A guide; traceparent / tracestate / A2A-
-    # Extensions are the Connect contract headers. Whether the proxy
-    # forwards the non-Authorization headers is UNVERIFIED (see README
-    # risk #2) — the spike logs what actually arrives at INIT_SESSION.
+    # Headers the Runtime proxy forwards into the container.
+    # "Authorization" was REMOVED 24 Nov: the service rejects it in
+    # the allowlist unless a custom JWT authorizer is configured
+    # ("Authorization header can be specified in requestHeaderAllowlist
+    # only when runtime is set up with customJWTAuthorizer"), and
+    # Connect's API key is not a JWT — so the container-side bearer
+    # check cannot receive the key through the Runtime proxy. The
+    # allowlist keeps the Connect contract headers (traceparent /
+    # tracestate / A2A-Extensions); whether the proxy forwards them
+    # is UNVERIFIED (see README risk #2) — the spike logs what
+    # actually arrives at INIT_SESSION. The curl test (risk #1)
+    # now decides whether the endpoint is open or IAM-locked.
     request_header_allowlist = [
-      "Authorization",
       "traceparent",
       "tracestate",
       "A2A-Extensions",
