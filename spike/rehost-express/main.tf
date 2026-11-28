@@ -177,6 +177,10 @@ resource "aws_ecs_express_gateway_service" "spike" {
   cpu    = var.cpu
   memory = var.memory
 
+  # The spike image was built for ARM64 (CodeBuild uses an ARM container).
+  # Express Mode defaults to X86_64, which fails with "exec format error".
+  cpu_architecture = "ARM64"
+
   # /ping is served by main.py without auth (the Dockerfile healthcheck
   # uses it too) — the load balancer's health check.
   health_check_path = "/ping"
