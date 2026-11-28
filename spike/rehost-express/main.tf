@@ -149,6 +149,16 @@ resource "aws_iam_role_policy" "task" {
         ]
       },
       {
+        Sid    = "BedrockMarketplaceSubscribe"
+        Effect = "Allow"
+        # Haiku 4.5 is served through AWS Marketplace: Bedrock completes the
+        # account's subscription on first invoke, and the calling principal
+        # must hold these two actions (Nov 28: both the spike's calls and
+        # the console Playground hit AccessDenied until this was added).
+        Action   = ["aws-marketplace:ViewSubscriptions", "aws-marketplace:Subscribe"]
+        Resource = "*"
+      },
+      {
         Sid      = "ReadOwnApiKeySecret"
         Effect   = "Allow"
         Action   = "secretsmanager:GetSecretValue"
