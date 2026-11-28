@@ -193,7 +193,8 @@ resource "aws_ecs_express_gateway_service" "spike" {
     }
 
     aws_logs_configuration {
-      log_group = aws_cloudwatch_log_group.rehost.name
+      log_group        = aws_cloudwatch_log_group.rehost.name
+      log_stream_prefix = "spike"
     }
   }
 
